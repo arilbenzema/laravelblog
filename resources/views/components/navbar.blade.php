@@ -8,10 +8,10 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="{{ route('welcome') }}">Laman Utama</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">Tentang Blog</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Hubungi Kami</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('posts') }}">Blog Posts</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('welcome') ? 'active' : '' }}" href="{{ route('welcome') }}">Laman Utama</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">Tentang Blog</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Hubungi Kami</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('posts.index') ? 'active' : '' }}" href="{{ route('posts.index') }}">Blog Posts</a></li>
 
                     </ul>
                 </div>

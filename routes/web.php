@@ -19,7 +19,8 @@ Route::get('/blog-posts', function () {
     return view('posts');
 })->name('posts');
 
+Route::get('posts', function () {
+    return view('posts.index');
+})->name('posts.index');
 
-route::post('posts', function () {
-    return view('Post.index');
-});
+
