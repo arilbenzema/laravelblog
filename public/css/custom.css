@@ -1,0 +1,13 @@
+/* Card background kelabu lembut */
+.card {
+  background-color: #f8f9fa; /* warna kelabu Bootstrap */
+  border: 1px solid #e0e0e0; /* border halus */
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.card:hover {
+  background-color: #ffffff; /* bila hover, jadi putih */
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.1);
+  transform: translateY(-3px);
+}

@@ -15,6 +15,11 @@ Route::get('/hubungi-kami', function () {
     return view('contact');
 })->name('contact');
 
-Route::get('/produk', function () {
-    return view('product');
-})->name('product');
+Route::get('/blog-posts', function () {
+    return view('posts');
+})->name('posts');
+
+
+route::post('posts', function () {
+    return view('Post.index');
+});
