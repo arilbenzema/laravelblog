@@ -12,8 +12,10 @@ class PostSeeder extends Seeder
     public function run(): void
     {
         Post::create([
+            'slug' => 'asas-laravel-untuk-pemula',
             'title' => 'Asas Laravel untuk Pemula',
-            'content' => 'This is a sample post content.',
+            'content' => 'Panduan komprehensif untuk menggunakan Eloquent ORM dengan berkesan. Pelajari relationship, query builder,
+            dan tips optimisasi untuk aplikasi yang lebih pantas.',
             'author' => 'John Doe',
             'author_info' => 'Pengajar Laravel',
             'image' => 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=256&h=256&fit=crop',
@@ -21,6 +23,7 @@ class PostSeeder extends Seeder
         ]);
 
         Post::create([
+            'slug' => 'menguasai-eloquent-orm',
             'title' => 'Menguasai Eloquent ORM',
             'content' => 'Eloquent ORM adalah bagian penting dari Laravel.',
             'author' => 'Jane Smith',
