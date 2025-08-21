@@ -16,7 +16,7 @@ class PostController extends Controller
 
     public function show(string $slug)
     {
-        $post = Post::where('slug', $slug)->firstOrFail();
+        $post = Post::where('slug', $slug)->with('comments')->firstOrFail();
         return view('posts.show', compact('post'));
     }
 

@@ -13,7 +13,12 @@ class Post extends Model
         'author_info',
         'image',
         'category',
-        'slug', 
+        'slug',
+
     ];
+    public function comments()
+{
+    return $this->hasMany(\App\Models\Comment::class)->latest();
+}
 
 }
