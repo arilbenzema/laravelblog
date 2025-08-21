@@ -20,7 +20,7 @@
       <a href="{{ route('posts.edit', $post) }}" class="btn btn-warning btn-sm">Edit Post</a>
 
       <form action="{{ route('posts.destroy', $post) }}" method="POST"
-            onsubmit="return confirm('Padam post ini? Tindakan tidak boleh diundurkan.');" class="d-inline">
+            onsubmit="return confirm('Are sure you want to delete this post? This action cannot be undone');" class="d-inline">
         @csrf
         @method('DELETE')
         <button type="submit" class="btn btn-danger btn-sm">Delete Post</button>
