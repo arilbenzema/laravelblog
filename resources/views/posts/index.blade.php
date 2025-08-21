@@ -11,6 +11,13 @@
     </p>
   </div>
 
+  <div class="container py-5 d-flex justify-content-end">
+    <a href="{{ route('posts.create') }}" class="btn btn-primary">
+        + Tambah Blog Post
+    </a>
+</div>
+
+
 {{-- Cards --}}
   <div class="container py-5">
   <div class="vstack gap-4">

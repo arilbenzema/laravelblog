@@ -2,58 +2,80 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::all();
-        return view('posts.index', [
-            'posts' => $posts]);
-
+        $posts = Post::latest()->get();
+        return view('posts.index', compact('posts'));
     }
-    public function show($slug)
+
+    public function show(string $slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
-        return view('posts.show',compact('post'));
-
+        return view('posts.show', compact('post'));
     }
 
     public function create()
     {
-    // Logic for creating a new post can be added here
+        return view('posts.create');
     }
 
-    public function store()
+    public function store(Request $request): RedirectResponse
     {
-    // Logic for storing a new post can be added here
+        $validated = $request->validate([
+            'title'       => 'required',
+            'slug'        => 'required|unique:posts,slug',
+            'content'     => 'required',
+            'category'    => 'required',
+            'author'      => 'required',
+            'author_info' => 'required',
+            'image'       => 'nullable|string|max:2048',
+            'created_at'  => 'nullable|date',
+            'updated_at'  => 'nullable|date',
+        ]);
+
+        $post = Post::create($validated);
+
+        return redirect()
+            ->route('posts.show', ['slug' => $post->slug])
+            ->with('success', 'Post berjaya ditambah!');
     }
 
-    public function update()
+    public function edit(Post $post)
     {
-    // Logic for updating a post can be added here
+        return view('posts.edit', compact('post'));
     }
 
-    public function destroy()
+    public function update(Request $request, Post $post): RedirectResponse
     {
-    // Logic for deleting a post can be added here
+        $validated = $request->validate([
+            'title'       => 'required',
+            'slug'        => 'required|unique:posts,slug,' . $post->id,
+            'content'     => 'required',
+            'category'    => 'required',
+            'author'      => 'required',
+            'author_info' => 'required',
+            'image'       => 'nullable|string|max:2048',
+        ]);
+
+        $post->update($validated);
+
+        return redirect()
+            ->route('posts.show', ['slug' => $post->slug])
+            ->with('success', 'Post berjaya dikemaskini!');
     }
 
-    public function edit()
+    public function destroy(Post $post): RedirectResponse
     {
-    // Logic for editing a post can be added here
+        $post->delete();
+
+        return redirect()
+            ->route('posts.index')
+            ->with('success', 'Post berjaya dipadam.');
     }
-
-
 }
-
-
-
-
-
-
-
-
-
