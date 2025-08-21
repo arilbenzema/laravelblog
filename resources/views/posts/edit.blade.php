@@ -78,7 +78,7 @@
 
             <div class="d-flex gap-2 mt-4">
               <button class="btn btn-primary" type="submit">Simpan Perubahan</button>
-              <a href="{{ route('posts.show', $post) }}" class="btn btn-light">Batal</a>
+              <a href="{{ route('posts.index', $post) }}" class="btn btn-light">Batal</a>
             </div>
           </form>
         </div>
