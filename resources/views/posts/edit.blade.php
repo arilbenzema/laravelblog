@@ -13,6 +13,7 @@
         </div>
       @endif
 
+      {{--edit blog post--}}
       <div class="card shadow-sm border-0">
         <div class="card-header bg-white"><h5 class="mb-0">Edit Blog Post</h5></div>
         <div class="card-body">
@@ -39,7 +40,7 @@
               @error('slug') <div class="invalid-feedback d-block">{{ $message }}</div> @enderror
             </div>
 
-            {{-- Content --}}
+            {{-- Author Information --}}
             <div class="mb-3">
               <label class="form-label">Content</label>
               <textarea name="content" rows="6" class="form-control @error('content') is-invalid @enderror" required>{{ old('content', $post->content) }}</textarea>

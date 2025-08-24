@@ -13,7 +13,7 @@
 
       @if($errors->any())
         <div class="alert alert-danger">
-          <strong>Sila semak input berikut:</strong>
+          <strong>Please check the following inputs:</strong>
           <ul class="mb-0">
             @foreach($errors->all() as $error)
               <li>{{ $error }}</li>

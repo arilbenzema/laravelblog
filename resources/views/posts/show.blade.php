@@ -3,12 +3,17 @@
 @section('title', $post->title)
 @section('content')
 
-@if (session('success'))
-  <div class="alert alert-success alert-dismissible fade show mb-0" role="alert">
-    {{ session('success') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-  </div>
+
+  {{-- Success message --}}
+  @if (session('success'))
+  <div class="alert alert-success alert-dismissible fade show d-flex align-items-center mb-0" role="alert">
+    {{-- Ikon check-circle --}}
+    <i class="bi bi-check-circle-fill me-2"></i>
+    <div>{{ session('success') }}</div>
+    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 @endif
+
 
 <div class="container py-5" style="max-width: 700px;">
 
