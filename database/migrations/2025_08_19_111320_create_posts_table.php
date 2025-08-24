@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('author_info')->nullable();
             $table->string('image', 1024)->nullable();
             $table->string('category')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

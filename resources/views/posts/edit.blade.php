@@ -47,18 +47,23 @@
               @error('content') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
 
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label class="form-label">Author</label>
-                <input type="text" name="author" class="form-control @error('author') is-invalid @enderror"
-                       value="{{ old('author', $post->author) }}" required>
-                @error('author') <div class="invalid-feedback">{{ $message }}</div> @enderror
-              </div>
-              <div class="col-md-6">
-                <label class="form-label">Author Info</label>
-                <input type="text" name="author_info" class="form-control @error('author_info') is-invalid @enderror"
-                       value="{{ old('author_info', $post->author_info) }}" required>
-                @error('author_info') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            {{-- Author --}}
+             <div class="row g-3">
+            <div class="col-md-6">
+                <label for="user_id" class="form-label">Author</label>
+                @php $selectedId = old('user_id');
+                @endphp
+            <select name="user_id" id="user_id"
+                class="form-select @error('user_id') is-invalid @enderror">
+            <option value="">Select an author (optional)</option>
+            @foreach($users as $user)
+            <option value="{{ $user->id }}" @selected($selectedId == $user->id)>
+                {{ $user->name }} ({{ $user->email }})
+            </option>
+        @endforeach
+    </select>
+    @error('user_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
+    </div>
               </div>
             </div>
 
@@ -88,4 +93,29 @@
     </div>
   </div>
 </div>
+{{-- Auto-update slug on edit (stop when slug manually edited) --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const titleInput = document.querySelector('input[name="title"]');
+  const slugInput  = document.querySelector('input[name="slug"]');
+  if (!titleInput || !slugInput) return;
+
+  const slugify = (t) => t.toString()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .toLowerCase().trim()
+    .replace(/[^a-z0-9\s-]/g,'')
+    .replace(/\s+/g,'-')
+    .replace(/-+/g,'-');
+
+  // Jika user ubah slug sendiri, hentikan auto-update
+  let touched = false;
+  slugInput.addEventListener('input', () => { touched = true; });
+
+  // Auto-update selagi slug belum disentuh
+  titleInput.addEventListener('input', () => {
+    if (!touched) slugInput.value = slugify(titleInput.value);
+  });
+});
+</script>
 @endsection
+

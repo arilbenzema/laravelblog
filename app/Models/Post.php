@@ -9,16 +9,17 @@ class Post extends Model
     protected $fillable = [
         'title',
         'content',
+        'image',
         'author',
         'author_info',
-        'image',
         'category',
         'slug',
+        'user_id',
 
     ];
     public function comments()
 {
-    return $this->hasMany(\App\Models\Comment::class)->latest();
+    return $this->hasMany(Comment::class)->orderBy('created_at', 'desc');
 }
 
     public function user()
