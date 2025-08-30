@@ -11,12 +11,64 @@
     </p>
   </div>
 
+<!-- Search Component dengan Input Group (tanpa absolute) -->
+<div class="mx-auto mb-4" style="max-width: 500px;">
+  <form method="GET" action="{{ route('posts.index') }}">
+    <div class="input-group input-group-md">
+
+      <!-- Ikon search kiri -->
+      <span class="input-group-text bg-white">
+        <i class="bi bi-search text-muted"></i>
+      </span>
+
+      <!-- Input -->
+      <input type="text"
+             name="search"
+             value="{{ request('search') }}"
+             class="form-control"
+             placeholder="Search posts..."
+             aria-label="Search posts">
+
+      <!-- Clear button -->
+      @if(request('search'))
+        <button type="button"
+                onclick="document.querySelector('input[name=search]').value=''; this.closest('form').submit();"
+                class="btn btn-outline-secondary">
+          <i class="bi bi-x-circle"></i>
+        </button>
+      @endif
+
+      <!-- Submit button -->
+      <button class="btn btn-primary" type="submit">
+        <i class="bi bi-search"></i> Cari
+      </button>
+    </div>
+  </form>
+</div>
+<!-- End -->
+
   <div class="container py-5 d-flex justify-content-start">
     <a href="{{ route('posts.create') }}" class="btn btn-primary">
         + Tambah Blog Post
     </a>
 </div>
 
+<!-- Search Results Info -->
+@if(request('search'))
+  <div class="mb-4 text-center">
+    <p class="text-muted small">
+      Showing results for
+      "<span class="fw-semibold">{{ request('search') }}</span>"
+
+      @if($posts->count() > 0)
+        – {{ $posts->count() }} {{ Str::plural('post', $posts->count()) }} found
+      @else
+        – No posts found
+      @endif
+    </p>
+  </div>
+@endif
+<!-- End -->
 
 {{-- Cards --}}
   <div class="container py-5">

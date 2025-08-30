@@ -31,5 +31,5 @@ Route::delete('posts/{post:slug}', [\App\Http\Controllers\PostController::class,
 Route::get('posts', [\App\Http\Controllers\PostController::class,'index'])->name('posts.index');
 Route::get('posts/{slug}', [\App\Http\Controllers\PostController::class,'show'])->name('posts.show');
 
-
+Route::get('admin/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
