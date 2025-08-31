@@ -15,6 +15,11 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{{url('frontend/css/styles.css')}}" rel="stylesheet" />
+        <!-- Bootstrap Icons (CDN) -->
+        <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+
     </head>
     <body id="page-top">
 
