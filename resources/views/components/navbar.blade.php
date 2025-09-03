@@ -13,7 +13,31 @@
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Hubungi Kami</a></li>
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('posts.index') ? 'active' : '' }}" href="{{ route('posts.index') }}">Blog Posts</a></li>
 
-                    </ul>
-                </div>
+                {{-- Button Log Masuk--}}
+                <div class="d-flex align-items-center gap-3">
+                    @auth
+                    <span class="text-white">Hello, {{ auth()->user()->name }}!</span>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit"
+                        class="btn btn-danger btn-sm px-4"
+                        onclick="return confirm('Adakah anda pasti untuk log keluar?')">Log Keluar
+                    </button>
+                    </form>
+                    <!-- -->
+                    @else
+                    <a href="{{ route('login') }}"
+                    class="btn btn-success btn-sm px-4 {{ request()->routeIs('login') ? 'text-danger fw-bold' : '' }}"
+                    aria-current="{{ request()->routeIs('login') ? 'page' : '' }}">Log Masuk
+            </a>
+                {{-- Button Register --}}
+                    <a href="{{ route('register') }}"
+                    class="btn btn-primary btn-sm px-4 {{ request()->routeIs('register') ? 'active' : '' }}"
+                    aria-current="{{ request()->routeIs('register') ? 'page' : '' }}">Daftar
+                    @endauth
+            </a>
+                    </div>
+                </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
