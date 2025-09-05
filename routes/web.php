@@ -25,7 +25,7 @@ Route::post('posts', [\App\Http\Controllers\PostController::class,'store'])->nam
 Route::post('posts/{slug}/comments', [\App\Http\Controllers\CommentController::class, 'store'])->name('comments.store');
 
 //Post CRUD//
-Route::get('posts/{post:slug}/edit', [\App\Http\Controllers\PostController::class,'edit'])->name('posts.edit');
+Route::get('posts/{post:slug}/edit', [\App\Http\Controllers\PostController::class,'edit'])->name('posts.edit')->middleware('can:update,post');
 Route::put('posts/{post:slug}', [\App\Http\Controllers\PostController::class,'update'])->name('posts.update');
 Route::delete('posts/{post:slug}', [\App\Http\Controllers\PostController::class,'destroy'])->name('posts.destroy');
 
@@ -33,7 +33,10 @@ Route::get('posts', [\App\Http\Controllers\PostController::class,'index'])->name
 Route::get('posts/{slug}', [\App\Http\Controllers\PostController::class,'show'])->name('posts.show');
 
 //Dashboard//
-Route::get('admin/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+Route::get('admin/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard.index');
+});
+
 
 Route::get('login',[\App\Http\Controllers\AuthController::class,'showLoginForm'])->name('login.form');
 Route::post('login',[\App\Http\Controllers\AuthController::class,'login'])->name('login');

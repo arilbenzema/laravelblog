@@ -21,8 +21,13 @@
   <div class="d-flex justify-content-between align-items-start mb-3">
     <h1 class="fw-bold mb-0">{{ $post->title }}</h1>
 
-    <div class="d-flex gap-2">
-      <a href="{{ route('posts.edit', $post->slug) }}" class="btn btn-warning btn-sm">Edit Post</a>
+    {{-- Only show edit/delete buttons to admin --}}
+
+        @can('update', $post)
+        <div class="d-flex gap-2">
+        <a href="{{ route('posts.edit', $post->slug) }}" class="btn btn-warning btn-sm">Edit Post</a>
+        @endcan
+        {{--@endif--}}
 
       <form action="{{ route('posts.destroy', $post->slug) }}" method="POST"
             onsubmit="return confirm('Are you sure you want to delete this post? This action cannot be undone');" class="d-inline">

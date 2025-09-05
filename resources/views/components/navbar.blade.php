@@ -12,6 +12,9 @@
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}" href="{{ route('about') }}">Tentang Blog</a></li>
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">Hubungi Kami</a></li>
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('posts.index') ? 'active' : '' }}" href="{{ route('posts.index') }}">Blog Posts</a></li>
+                        @can('is-admin')
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('dashboard.index') ? 'active' : '' }}" href="{{ route('dashboard.index') }}">Dashboard</a></li>
+                        @endcan
 
                 {{-- Button Log Masuk--}}
                 <div class="d-flex align-items-center gap-3">
@@ -21,7 +24,7 @@
                         @csrf
                         <button type="submit"
                         class="btn btn-danger btn-sm px-4"
-                        onclick="return confirm('Adakah anda pasti untuk log keluar?')">Log Keluar
+                        onclick="return confirm('Are you sure you want to log out?')">Log Keluar
                     </button>
                     </form>
                     <!-- -->
