@@ -38,6 +38,7 @@
                     class="btn btn-primary btn-sm px-4 {{ request()->routeIs('register') ? 'active' : '' }}"
                     aria-current="{{ request()->routeIs('register') ? 'page' : '' }}">Daftar
                     @endauth
+
             </a>
                     </div>
                 </ul>

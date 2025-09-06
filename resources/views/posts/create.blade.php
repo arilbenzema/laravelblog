@@ -22,14 +22,16 @@
         </div>
       @endif
 
+
       <div class="card shadow-sm border-0">
         <div class="card-header bg-white">
-          <h5 class="mb-0">Tambah Blog Post</h5>
+          <h5 class="mb-0">Maklumat Blog Post</h5>
         </div>
 
         <div class="card-body">
           <form action="{{ route('posts.store') }}" method="POST" novalidate>
             @csrf
+
 
             {{-- Title --}}
             <div class="mb-3">

@@ -46,12 +46,13 @@
   </form>
 </div>
 <!-- End -->
-
+  @can('create', App\Models\Post::class)
   <div class="container py-5 d-flex justify-content-start">
     <a href="{{ route('posts.create') }}" class="btn btn-primary">
         + Tambah Blog Post
     </a>
 </div>
+  @endcan
 
 <!-- Search Results Info -->
 @if(request('search'))

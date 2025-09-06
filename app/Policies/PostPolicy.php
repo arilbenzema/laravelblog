@@ -5,15 +5,16 @@ namespace App\Policies;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Facades\Auth;
 
 class PostPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user, Post $post): bool
+    public function viewAny(?User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,7 +22,7 @@ class PostPolicy
      */
     public function view(User $user, Post $post): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,7 +30,7 @@ class PostPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return Auth::user() !== null;
     }
 
     /**
@@ -37,8 +38,13 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        return $user?->role === 'admin' ||
-            ($user->role === 'author' && $post->user_id === $user->id);
+        // Admin can update any post
+        if ($user->role === 'admin') {
+            return true;
+        }
+
+        // Authors can only update their own posts
+        return $user->role === 'author' && $post->user_id === $user->id;
     }
 
     /**
@@ -46,7 +52,11 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        return false;
+        // Admin can delete any post
+        if ($user->role === 'admin') {
+            return true;
+        }
+         return $user->role === 'author' && $post->user_id === $user->id;
     }
 
     /**
@@ -62,6 +72,7 @@ class PostPolicy
      */
     public function forceDelete(User $user, Post $post): bool
     {
-        return false;
+        // Only admins can permanently delete posts
+        return $user->role === 'admin';
     }
 }

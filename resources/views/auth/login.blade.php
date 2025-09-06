@@ -21,9 +21,9 @@
 
       <div class="card shadow-sm border-0">
         <div class="card-body p-4">
-          <h4 class="text-center mb-2">Masuk ke Akun Anda</h4>
+          <h4 class="text-center mb-2">Login to Your Account</h4>
           <p class="text-center text-muted mb-4">
-            Atau <a href="{{ route('register') }}">daftar akun baru</a>
+            Or <a href="{{ route('register') }}">create a new account</a>
           </p>
 
           <form method="POST" action="{{ route('login') }}" novalidate>
@@ -31,7 +31,7 @@
 
             {{-- Email --}}
             <div class="mb-3">
-              <label for="email" class="form-label">Alamat Email</label>
+              <label for="email" class="form-label">Email Address</label>
               <input
                 id="email"
                 name="email"
@@ -39,7 +39,7 @@
                 autocomplete="email"
                 required
                 class="form-control @error('email') is-invalid @enderror"
-                placeholder="contoh@emel.com"
+                placeholder="Enter your email address"
                 value="{{ old('email') }}"
               >
               @error('email')
@@ -49,7 +49,7 @@
 
             {{-- Password --}}
             <div class="mb-3">
-              <label for="password" class="form-label">Kata Sandi</label>
+              <label for="password" class="form-label">Password</label>
               <input
                 id="password"
                 name="password"
@@ -57,7 +57,7 @@
                 autocomplete="current-password"
                 required
                 class="form-control @error('password') is-invalid @enderror"
-                placeholder="Masukkan kata sandi"
+                placeholder="Enter your password"
               >
               @error('password')
                 <div class="invalid-feedback">{{ $message }}</div>
@@ -68,17 +68,17 @@
             <div class="d-flex justify-content-between align-items-center mb-3">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="1" id="remember_me" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                <label class="form-check-label" for="remember_me">Ingat saya</label>
+                <label class="form-check-label" for="remember_me">Remember me</label>
               </div>
 
               @if (Route::has('password.request'))
-                <a href="{{ route('password.request') }}" class="small">Lupa kata sandi?</a>
+                <a href="{{ route('password.request') }}" class="small">Forgot your password?</a>
               @endif
             </div>
 
             {{-- Submit --}}
             <button type="submit" class="btn btn-primary w-100">
-              Log Masuk
+              Login
             </button>
           </form>
         </div>
@@ -87,7 +87,7 @@
       {{-- Papar senarai ralat umum (jika ada) --}}
       @if ($errors->any())
         <div class="alert alert-warning mt-3 mb-0">
-          <strong>Perhatian:</strong> Sila semak input anda.
+          <strong>Attention:</strong> Invalid username/password. Please try again.
         </div>
       @endif
     </div>

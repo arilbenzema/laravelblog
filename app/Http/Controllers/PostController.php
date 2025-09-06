@@ -6,6 +6,8 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
+
 
 class PostController extends Controller
 {
@@ -40,12 +42,17 @@ class PostController extends Controller
 
     public function create()
     {
+        // authorize dulu
+        Gate::authorize('create', Post::class);
+
         $users = User::select('id','name','email')->orderBy('name')->get();
         return view('posts.create', compact('users'));
     }
 
     public function store(Request $request): RedirectResponse
     {
+        Gate::authorize('create', Post::class);
+
         $validated = $request->validate([
             'title'    => 'required|string|max:255',
             'slug'     => 'required|string|unique:posts,slug',
@@ -69,12 +76,16 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
+        // authorize dulu
+        Gate::authorize('update', $post);
+
         $users = User::select('id','name','email')->orderBy('name')->get();
         return view('posts.edit', compact('post', 'users'));
     }
 
     public function update(Request $request, Post $post): RedirectResponse
     {
+        Gate::authorize('update', $post);
         $validated = $request->validate([
             'title'    => 'required|string|max:255',
             'slug'     => 'required|string|unique:posts,slug,' . $post->id,
@@ -84,11 +95,16 @@ class PostController extends Controller
             'image'    => 'nullable|string|max:2048',
         ]);
 
+        if (Gate::check('is-author')) {
+            // Admin boleh tukar author
+            $validatedData['user_id'] = auth()->user()->id;
+        }
+
         $u = User::findOrFail($validated['user_id']);
         $validated['author']      = $u->name;
         $validated['author_info'] = $u->email;
 
-        $post->update($validated);
+        $post->update($validatedData);
 
         return redirect()
             ->route('posts.show', ['slug' => $post->slug])
@@ -97,6 +113,7 @@ class PostController extends Controller
 
     public function destroy(Post $post): RedirectResponse
     {
+        Gate::authorize('delete', $post);
         $post->delete();
 
         return redirect()

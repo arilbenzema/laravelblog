@@ -49,19 +49,22 @@
 
             {{-- Author --}}
              <div class="row g-3">
-            <div class="col-md-6">
+                <div class="col-md-6">
                 <label for="user_id" class="form-label">Author</label>
-                @php $selectedId = old('user_id');
-                @endphp
-            <select name="user_id" id="user_id"
-                class="form-select @error('user_id') is-invalid @enderror">
-            <option value="">Select an author (optional)</option>
-            @foreach($users as $user)
-            <option value="{{ $user->id }}" @selected($selectedId == $user->id)>
-                {{ $user->name }} ({{ $user->email }})
-            </option>
-        @endforeach
-    </select>
+
+                <select name="user_id" id="user_id"
+                class="form-select @error('user_id') is-invalid @enderror"
+                @can('is-author') disabled @endcan>
+
+                <option value="">Select an author (optional)</option>
+
+                @foreach ($users as $user)
+                <option value="{{ $user->id }}"
+                    {{ old('user_id', $post->user_id) == $user->id ? 'selected' : '' }}>
+                    {{ $user->name }} ({{ $user->email }})
+                </option>
+            @endforeach
+        </select>
     @error('user_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
     </div>
               </div>
