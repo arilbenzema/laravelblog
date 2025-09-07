@@ -14,6 +14,7 @@
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('posts.index') ? 'active' : '' }}" href="{{ route('posts.index') }}">Blog Posts</a></li>
                         @can('is-admin')
                         <li class="nav-item"><a class="nav-link {{ request()->routeIs('dashboard.index') ? 'active' : '' }}" href="{{ route('dashboard.index') }}">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link {{ request()->routeIs('profile.show') ? 'active' : '' }}" href="{{ route('profile.show') }}">Profile</a></li>
                         @endcan
 
                 {{-- Button Log Masuk--}}

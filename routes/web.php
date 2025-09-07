@@ -44,6 +44,12 @@ Route::get('register',[\App\Http\Controllers\AuthController::class,'showRegister
 Route::post('register',[\App\Http\Controllers\AuthController::class,'register'])->name('register.post');
 Route::post('logout',[\App\Http\Controllers\AuthController::class,'logout'])->name('logout');
 
+// Profile routes
+Route::middleware('auth')->group(function () {
+Route::get('profile', [\App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
+Route::put('profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+
+});
 
 
 
