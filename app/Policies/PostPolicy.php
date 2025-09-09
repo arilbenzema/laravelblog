@@ -30,7 +30,8 @@ class PostPolicy
      */
     public function create(User $user): bool
     {
-        return Auth::user() !== null;
+        return $user->hasAnyRole(['admin', 'author']);
+
     }
 
     /**
@@ -39,12 +40,12 @@ class PostPolicy
     public function update(User $user, Post $post): bool
     {
         // Admin can update any post
-        if ($user->role === 'admin') {
+        if ($user->hasRole('admin')) {
             return true;
         }
 
         // Authors can only update their own posts
-        return $user->role === 'author' && $post->user_id === $user->id;
+        return $user->hasRole === 'author' && $post->user_id === $user->id;
     }
 
     /**
@@ -53,10 +54,10 @@ class PostPolicy
     public function delete(User $user, Post $post): bool
     {
         // Admin can delete any post
-        if ($user->role === 'admin') {
+        if ($user->hasRole('admin')) {
             return true;
         }
-         return $user->role === 'author' && $post->user_id === $user->id;
+         return $user->hasRole === 'author' && $post->user_id === $user->id;
     }
 
     /**
@@ -64,7 +65,7 @@ class PostPolicy
      */
     public function restore(User $user, Post $post): bool
     {
-        return false;
+        return $user->hasRole('admin');
     }
 
     /**
@@ -73,6 +74,17 @@ class PostPolicy
     public function forceDelete(User $user, Post $post): bool
     {
         // Only admins can permanently delete posts
-        return $user->role === 'admin';
+        return $user->hasRole === 'admin';
     }
-}
+
+    public function publish(User $user, Post $post): bool
+    {
+        // Only admins can publish posts
+        if ($user->hasRole(['admin'])) {
+            // Authors can only publish their own posts
+            }
+
+            return $user->hasRole === 'author' && $post->user_id === $user->id;
+        }
+    }
+

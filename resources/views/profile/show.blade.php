@@ -72,16 +72,68 @@
                 </div>
 
                 {{-- Account Details --}}
-                <div class="row g-3 mt-1">
-                    <div class="col-md-6">
-                        <label class="form-label">Member Since</label>
-                        <input type="text" class="form-control" value="{{ $user->created_at->format('F j, Y') }}" readonly>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label">Account Role</label>
-                        <input type="text" class="form-control" value="{{ ucfirst($user->role ?? 'User') }}" readonly>
-                    </div>
-                </div>
+<div class="row g-3 mt-1">
+    {{-- Kiri: Member Since --}}
+    <div class="col-md-6">
+        <label class="form-label">Member Since</label>
+        <input type="text" class="form-control" value="{{ $user->created_at->format('F j, Y') }}" readonly>
+    </div>
+
+    {{-- Kanan: Account Roles --}}
+    <div class="col-md-6">
+        <label for="roles" class="form-label">Account Roles</label>
+
+        {{-- Current Roles Display --}}
+        @php
+            // Ambil nama role semasa (Spatie)
+            $currentRoles = $user->getRoleNames();
+        @endphp
+
+        @if ($currentRoles->count())
+            <p class="small text-muted mb-1">Current roles:</p>
+            <div class="d-flex flex-wrap gap-2 mb-2">
+                @foreach($currentRoles as $name)
+                    <span class="badge bg-primary">{{ ucfirst($name) }}</span>
+                @endforeach
+            </div>
+        @else
+            {{-- Fallback jika tiada role (mudah kesan isu guard/cache) --}}
+            <div class="mb-2">
+                <span class="badge bg-secondary">No roles assigned</span>
+            </div>
+        @endif
+
+        {{-- Multi select --}}
+        @php
+            // Preselect ikut old() atau role semasa
+            $selectedRoles = old('roles', $user->getRoleNames()->toArray());
+        @endphp
+
+        <select name="roles[]" id="roles"
+                class="form-select @error('roles') is-invalid @enderror"
+                multiple size="4">
+            @foreach ($roles as $role)
+                <option value="{{ $role->name }}"
+                    @selected(in_array($role->name, $selectedRoles))>
+                    {{ ucfirst($role->name) }}
+                </option>
+            @endforeach
+        </select>
+
+        <div class="form-text">
+            Hold <kbd>Ctrl</kbd> (Windows/Linux) or <kbd>Cmd</kbd> (Mac) to select multiple roles
+        </div>
+
+        @error('roles')
+            <div class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle-fill me-1"></i>{{ $message }}
+            </div>
+        @enderror
+    </div>
+</div>
+
+
+
 
                 {{-- Section: Change Password --}}
                 <div class="mt-4 mb-2 border-bottom pb-2">
